@@ -17,8 +17,12 @@ Including another URLconf
 
 from django.urls import path
 from first.views import FirstView, SecondView
+from users.views import UsersListCreateView, UserRetriveUpdateDeleteView
 
 urlpatterns = [
 path('first',FirstView.as_view()),
+    # динамічні частини<>
 path('second/<int:age>',SecondView.as_view()),
+path("users",UsersListCreateView.as_view()),
+path("users/<int:pk>",UserRetriveUpdateDeleteView.as_view()),
 ]
