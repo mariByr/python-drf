@@ -11,7 +11,9 @@ dependencies = [
     "mysqlclient (>=2.2.8,<3.0.0)",
     "django-dotenv (>=1.4.2,<2.0.0)",
     "django (>=6.0.5,<7.0.0)",
-    "django-filter (>=25.2,<26.0)"
+    "django-filter (>=25.2,<26.0)",
+    "djangorestframework-simplejwt (>=5.5.1,<6.0.0)",
+    "timedelta (>=2020.12.3,<2021.0.0)"
 ]
 
 

@@ -1,5 +1,5 @@
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework.request import Request
+from rest_framework.permissions import IsAuthenticated
 
 from django_filters.rest_framework import DjangoFilterBackend
 
@@ -14,9 +14,18 @@ class PizzaListCreateView(ListCreateAPIView):
     # def get_queryset(self):
     #     request:Request = self.request
     #     return filter_pizza(request.query_params)
-    queryset = PizzaModel.objects.all()
+    def get_queryset(self):
+        queryset = PizzaModel.objects.all()
+
+        only_margarita = self.request.query_params.get("only_margarita")
+
+        if only_margarita == "true":
+            queryset = PizzaModel.objects.only_margarita()
+
+        return queryset
     filter_backends = (DjangoFilterBackend,)
     filterset_class = PizzaFilter
+    permission_classes = (IsAuthenticated,)
 
 
 class PizzaRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):

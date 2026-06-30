@@ -4,6 +4,8 @@ from django.db import models
 from core.enums.regex_enum import RegexEnum
 from core.models import BaseModel
 
+from apps.pizza.managers import PizzaManager
+
 
 # Create your models here.
 class DaysChoices(models.TextChoices):
@@ -29,5 +31,7 @@ class PizzaModel(BaseModel):
     price = models.FloatField()
     days = models.CharField(max_length=9,choices=DaysChoices.choices)
     pizza_shop = models.ForeignKey('pizza_shop.PizzaShopModel', on_delete=models.CASCADE, related_name='pizzas')
+
+    objects = PizzaManager()
 
 
