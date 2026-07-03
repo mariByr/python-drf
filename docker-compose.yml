@@ -1,4 +1,16 @@
 services:
+  app:
+    build:
+      context: .
+    volumes:
+      - ./backend:/app
+    env_file:
+      - .env
+    ports:
+      - "8888:8000"
+    restart: on-failure
+    command:
+      ch -c "python manage.py runserver 0.0.0.0:8000"
   db:
    image: mysql:8
    env_file:
