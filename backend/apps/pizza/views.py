@@ -1,5 +1,5 @@
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from django_filters.rest_framework import DjangoFilterBackend
 
@@ -11,9 +11,7 @@ from apps.pizza.serializers import PizzaSerializer
 # Create your views here.
 class PizzaListCreateView(ListCreateAPIView):
     serializer_class = PizzaSerializer
-    # def get_queryset(self):
-    #     request:Request = self.request
-    #     return filter_pizza(request.query_params)
+
     def get_queryset(self):
         queryset = PizzaModel.objects.all()
 
@@ -25,9 +23,8 @@ class PizzaListCreateView(ListCreateAPIView):
         return queryset
     filter_backends = (DjangoFilterBackend,)
     filterset_class = PizzaFilter
-    permission_classes = (IsAuthenticated,)
-
-
+    # permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
 class PizzaRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     serializer_class = PizzaSerializer
     queryset = PizzaModel.objects.all()

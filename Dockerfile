@@ -1,7 +1,7 @@
 FROM python:3.13-alpine
 
 MAINTAINER Some Dev
-
+#  POETRY_VERSION=2.1.0 \ і PIP_DISABLE_PIP_VERSION_CHECK=on \  в ментора нема цих рядків
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=off \
@@ -26,4 +26,4 @@ COPY pyproject.toml /app/
 
 RUN poetry config virtualenvs.create false
 RUN poetry lock
-RUN poetry install
+RUN poetry install  --no-root
