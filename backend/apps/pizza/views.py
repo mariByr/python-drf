@@ -1,11 +1,11 @@
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, UpdateAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from django_filters.rest_framework import DjangoFilterBackend
 
 from apps.pizza.filter import PizzaFilter
 from apps.pizza.models import PizzaModel
-from apps.pizza.serializers import PizzaSerializer
+from apps.pizza.serializers import PizzaPhotoSerializer, PizzaSerializer
 
 
 # Create your views here.
@@ -29,3 +29,19 @@ class PizzaRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     serializer_class = PizzaSerializer
     queryset = PizzaModel.objects.all()
     http_method_names = ['get', 'put', 'delete','patch']
+
+class PizzaAddPhotoView(UpdateAPIView):
+    serializer_class = PizzaPhotoSerializer
+    queryset = PizzaModel.objects.all()
+    permission_classes = (AllowAny,)
+    http_method_names = ['put']
+    def perform_update(self, serializer):
+        pizza = self.get_object()
+        pizza.photo.delete(save=False)
+        super().perform_update(serializer)
+
+
+
+
+
+

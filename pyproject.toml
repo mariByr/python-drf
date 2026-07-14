@@ -13,7 +13,8 @@ dependencies = [
     "django (>=6.0.5,<7.0.0)",
     "django-filter (>=25.2,<26.0)",
     "djangorestframework-simplejwt (>=5.5.1,<6.0.0)",
-    "timedelta (>=2020.12.3,<2021.0.0)"
+
+    "pillow (>=12.3.0,<13.0.0)"
 ]
 
 

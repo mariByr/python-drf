@@ -1,5 +1,7 @@
 from rest_framework import serializers
 
+from core.services.img_service import convert_to_jpeg
+
 from apps.pizza.models import PizzaModel
 
 
@@ -18,4 +20,15 @@ class PizzaSerializer(serializers.ModelSerializer):
         if price==size:
             raise serializers.ValidationError('Price cannot be equal to size')
         return attrs
+
+class PizzaPhotoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PizzaModel
+        fields = ('photo',)
+
+    def validate_photo(self, value):
+            try:
+                return convert_to_jpeg(value)
+            except ValueError as error:
+                raise serializers.ValidationError(str(error))
 
