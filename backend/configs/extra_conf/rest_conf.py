@@ -10,8 +10,10 @@ REST_FRAMEWORK = {
 
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
-'DEFAULT_PERMISSION_CLASSES': (
+'DEFAULT_PERMISSION_CLASSES': [
 'rest_framework.permissions.AllowAny',
-),
+],
+'EXCEPTION_HANDLER':'core.handlers.error_handler.error_handler',
+
 
 }

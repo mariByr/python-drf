@@ -16,7 +16,7 @@ class ActivateUserView(GenericAPIView):
 
     def patch(self, *args, **kwargs):
         token = kwargs['token']
-        user = JWTService.verify_token(token, ActivateToken)
+        user = JWTService.verify_token(token, ActivateToken) #виклик метода для перевірки токена
         user.is_active = True
         user.save()
         serializer = UserSerializer(user)
