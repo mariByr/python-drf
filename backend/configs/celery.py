@@ -13,11 +13,11 @@ app.config_from_object('django.conf:settings', namespace='CELERY')#підклю�
 
 app.autodiscover_tasks() #шукає файли tasks.py у Django-застосунках
 #періодичні задачі
-app.conf.beat_schedule = {
-    'send_spam_every_minutes':{
-
-        'task': 'core.services.email_service.spam',
-        'schedule': crontab()#для періодичності crontab guru
-        # 'args': (),якщо функція яка тут виконується приймає арпгументи записуємо в аргс
-    }
-}
+# app.conf.beat_schedule = {
+#     'send_spam_every_minutes':{
+#
+#         'task': 'core.services.email_service.spam',
+#         'schedule': crontab()#для періодичності crontab guru
+#         # 'args': (),якщо функція яка тут виконується приймає арпгументи записуємо в аргс
+#     }
+# }

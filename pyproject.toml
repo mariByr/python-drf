@@ -24,7 +24,13 @@ dependencies = [
 
     "django-celery-beat (>=2.9.0,<3.0.0)",
 
-    "celery-types (>=0.26.0,<0.27.0)"
+    "celery-types (>=0.26.0,<0.27.0)",
+
+    "djangochannelsrestframework (>=1.3.0,<2.0.0)",
+
+    "daphne (>=4.2.3,<5.0.0)",
+
+    "channels (>=4.3.2,<5.0.0)"
 ]
 
 

@@ -37,8 +37,8 @@ class EmailService:
             subject="Register"
         )
 
-    @staticmethod
-    @app.task
-    def spam():
-        for user in UserModel.objects.all():
-            EmailService.__send_email(user.email, 'spam.html', {}, 'SPAM')
+    # @staticmethod
+    # @app.task
+    # def spam():
+    #     for user in UserModel.objects.all():
+    #         EmailService.__send_email(user.email, 'spam.html', {}, 'SPAM')

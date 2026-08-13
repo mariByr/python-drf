@@ -11,6 +11,17 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'configs.settings')
+from channels.middleware import BaseMiddleware
+from channels.routing import ProtocolTypeRouter, URLRouter
+from configs.routing import websocket_urlpatterns
 
-application = get_asgi_application()
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'configs.settings')
+#коли не було сокетів то по замовченню всі запити були http
+# application = get_asgi_application()
+#поділ на різні запити
+application = ProtocolTypeRouter({
+    'http': get_asgi_application(),
+    'websocket': BaseMiddleware(URLRouter(websocket_urlpatterns))
+
+})
+
