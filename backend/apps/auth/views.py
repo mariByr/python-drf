@@ -46,6 +46,7 @@ class RecoveryPasswordView(GenericAPIView):
         user=JWTService.verify_token(token, RecoveryToken)
         user.set_password(serializer.validated_data['password'])
         user.save()
+        return Response(status=status.HTTP_200_OK)
 
 
 
