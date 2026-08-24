@@ -5,3 +5,4 @@ __pycache__/
 .env
 celerybeat-schedule
 celerybeat-schedule.*
+celerybeat-schedule*
