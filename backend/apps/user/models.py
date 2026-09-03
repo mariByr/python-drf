@@ -7,7 +7,6 @@ from core.models import BaseModel
 from apps.user.managers import UserManager
 
 
-# Create your models here.
 class UserModel(AbstractBaseUser, PermissionsMixin,BaseModel):
     class Meta:
         db_table = 'auth_user'
