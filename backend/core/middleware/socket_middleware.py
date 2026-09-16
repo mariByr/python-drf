@@ -3,7 +3,6 @@ from channels.db import database_sync_to_async
 from channels.middleware import BaseMiddleware
 from core.services.jwt_service import JWTService, SocketToken
 
-#цей мідлвар замість бейсмідлвар
 
 @database_sync_to_async
 def get_user(token: str | None):
