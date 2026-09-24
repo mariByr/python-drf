@@ -6,4 +6,3 @@ __pycache__/
 celerybeat-schedule
 celerybeat-schedule.*
 celerybeat-schedule*
-client/static/
