@@ -23,5 +23,5 @@ class PizzaConsumer(GenericAsyncAPIConsumer):
             await self.reply(data=message,action=action,request_id=request_id)
 
     @action()
-    async def subscribe_to_pizza_model_change(self, request_id, **kwargs):
+    async def subscribe_to_pizza_model_changes(self, request_id, **kwargs):
         await self.pizza_model_activity.subscribe(request_id=request_id)

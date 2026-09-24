@@ -36,7 +36,7 @@ class ChatConsumer(GenericAsyncAPIConsumer):
             }
         )
     async def sender(self, data):
-        print(data)
+
         await self.send_json(data)
 
     @action()
@@ -53,5 +53,5 @@ class ChatConsumer(GenericAsyncAPIConsumer):
     @database_sync_to_async
     def get_profile_name(self):
         user = self.scope['user']
-        print('USER:', user)
+
         return user.profile.name

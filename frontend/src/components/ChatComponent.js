@@ -12,6 +12,11 @@ const ChatComponent = () => {
             socketInit(room).then(client => setSocketClient((client)))
 
         }
+        return()=>{
+            if(client){
+                client.close();
+            }
+        };
     }, [room])
 
     const socketInit = async (room) => {

@@ -1,4 +1,4 @@
-const baseURL = '/api'
+const baseURL = process.env.REACT_APP_API_URL;
 
 const auth = '/auth'
 const pizzas = '/pizzas'
