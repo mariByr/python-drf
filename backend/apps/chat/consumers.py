@@ -1,8 +1,13 @@
+import datetime
 from typing import cast
+
+from django.db.models.expressions import F
 
 from channels.db import database_sync_to_async
 from djangochannelsrestframework.decorators import action
 from djangochannelsrestframework.generics import GenericAsyncAPIConsumer
+
+from apps.chat.models import ChatRoomModel, MessageModel
 
 
 class ChatConsumer(GenericAsyncAPIConsumer):
@@ -16,18 +21,27 @@ class ChatConsumer(GenericAsyncAPIConsumer):
             return await self.close()
 
         await self.accept()
-        # room_name = self.scope['url_route']['kwargs']['room']
+        # self.room_name = self.scope['url_route']['kwargs']['room']
         self.room_name =  cast(
             str,
             self.scope['url_route']['kwargs'].get('room')
         )
+        self.room, _ = await ChatRoomModel.objects.aget_or_create(name=self.room_name)
         self.user_name = await self.get_profile_name()
         #make new group to comun
         await self.channel_layer.group_add(
             self.room_name,
             self.channel_name
         )
-        #after connection rozsulka message
+        messages = await self.get_last_five_messages()
+
+        for name, text in messages:
+            await self.sender({
+                'message': text,
+                'user': name,
+                'request_id': str(datetime.datetime.now())
+            })
+
         await self.channel_layer.group_send(
             self.room_name,
             {
@@ -41,7 +55,8 @@ class ChatConsumer(GenericAsyncAPIConsumer):
 
     @action()
     async def send_message(self, data, request_id, action):
-            await self.channel_layer.group_send(
+        await MessageModel.objects.acreate(room=self.room, user=self.scope['user'], text=data)
+        await self.channel_layer.group_send(
             self.room_name,
             {
                 'type': 'sender',
@@ -55,3 +70,8 @@ class ChatConsumer(GenericAsyncAPIConsumer):
         user = self.scope['user']
 
         return user.profile.name
+    @database_sync_to_async
+    def get_last_five_messages(self):
+        res=self.room.messages.annotate(name = F('user__profile__name')).values('text','name').order_by('id')[:5]
+
+        return reversed([(message['name'], message['text']) for message in res])

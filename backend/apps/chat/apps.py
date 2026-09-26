@@ -2,4 +2,6 @@ from django.apps import AppConfig
 
 
 class ChatConfig(AppConfig):
-    name = 'chat'
+    name = 'apps.chat'
+
+
