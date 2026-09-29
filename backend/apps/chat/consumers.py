@@ -21,7 +21,7 @@ class ChatConsumer(GenericAsyncAPIConsumer):
             return await self.close()
 
         await self.accept()
-        # self.room_name = self.scope['url_route']['kwargs']['room']
+
         self.room_name =  cast(
             str,
             self.scope['url_route']['kwargs'].get('room')
@@ -72,6 +72,6 @@ class ChatConsumer(GenericAsyncAPIConsumer):
         return user.profile.name
     @database_sync_to_async
     def get_last_five_messages(self):
-        res=self.room.messages.annotate(name = F('user__profile__name')).values('text','name').order_by('id')[:5]
+        res=self.room.messages.annotate(name = F('user__profile__name')).values('text','name').order_by('-id')[:5]
 
         return reversed([(message['name'], message['text']) for message in res])
